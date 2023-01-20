@@ -1,0 +1,112 @@
+<html>
+<head>
+ 
+	<title>npnp</title> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.¡s"></script>
+	<script type="text/javascript" src="cloudLocation. js"></script> 
+	<script src="https://cdn.apple-cloudkit.com/ck/1/cloudkit.js" async></script>
+	<script asvnc defer 
+	src="https://maps.googleapis.com/maps/api/js?key=###YOUR KEY ###*> 
+	</script>
+ 
+	<style>
+	html, body {
+	height: 50%;
+	margin: 0;
+	padding: 0;
+	}
+	#map {
+	height: 100%;
+	}
+	</style>
+ 
+ 
+</head> 
+<body>
+ 
+	<div class="container">
+ 
+	<div class="page-header'"> … </div>
+ 
+	<div id="map"></div>
+	&nbsp;
+ 
+	<div data-bind=" foreach: locations”>
+	<div class="panel panel-default”>
+	<div class="panel-body"">
+	
+</div> 
+</div>
+</div>
+</div>
+ 
+<script>
+ 
+function initMap () {
+ 
+}
+ 
+</script>
+ 
+</bodv> 
+</html>
+ 
+ 
+/*forse un altra pagina web*/
+ 
+window.addEventListener('cloudkitloaded', function() {
+	CloudKit.configure({
+	containers: [ {
+		containerIdentifier: ‘icloud.com.brianAdvent.Locatr', 
+		apiToken: ‘###’,
+		environment: 'development’
+}]
+ 
+});
+ 
+ 
+function LocatrViewModel() {
+	var self = this;
+	var container = CloudKit.getDefaultContainer ();
+	var publicDB = container. publicCloudDatabase;
+ 
+	self.locations = ko.observableArray();
+ 
+	self.newLocationTitle = ko.observable(‘ ’);
+ 
+	self.fetchRecords = function () {
+		var query = { recordType: 'Position' };
+ 
+// Execute the query.
+	return publicDB.performQuery(query).then(function (response) {
+	if (response.hasErrors) {
+	console.error(response.errors [0]);
+	return;
+	}
+	var records = response. records:
+	var numberOfRecords = records.length;
+	if (number0fRecords === 0) {
+	console.error ('No matching items');
+	return;
+	}
+ 
+	self. locations (records);
+	});
+ 
+};
+ 
+ 
+self.initMap = function (location) {
+ 
+}
+ 
+	container.setUpAuth().then(function(userInfo) {
+	self.fetchRecords( ): 
+// Records are public
+});
+}
+ 
+ 
+ko.applyBindings(new LocatrViewModel () );
+});
